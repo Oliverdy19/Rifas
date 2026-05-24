@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa Pandora - Edición Disney</title>
+    <!-- Tailwind CSS para los estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Estilos adicionales suaves */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#FCF6F5] text-[#4A3B39] selection:bg-pink-300 selection:text-pink-900 pb-12">
+
+    <!-- HEADER SECTION -->
+    <div class="w-full bg-gradient-to-b from-[#FFE4E1] to-[#FCF6F5] pt-12 pb-6 px-4 relative overflow-hidden shadow-sm">
+        <!-- Elementos decorativos -->
+        <i data-lucide="sparkles" class="absolute top-10 left-10 text-pink-300 opacity-50 w-8 h-8"></i>
+        <i data-lucide="star" class="absolute top-20 right-16 text-yellow-400 opacity-60 w-6 h-6"></i>
+        <i data-lucide="wand-2" class="absolute bottom-10 left-20 text-pink-400 opacity-40 w-10 h-10"></i>
+        
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <p class="text-sm tracking-[0.3em] text-gray-500 font-medium mb-2 uppercase">Gana una colección</p>
+            <h1 class="text-6xl md:text-7xl font-serif text-[#D49A89] mb-0 leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.05);">
+                RIFA
+            </h1>
+            <h2 class="text-3xl md:text-4xl font-bold tracking-widest text-[#2C2C2C] mt-2 mb-1">
+                PANDORA
+            </h2>
+            <p class="text-lg md:text-xl text-[#D49A89] font-serif italic mb-2">Edición Disney</p>
+            
+            <div class="mt-6 inline-block bg-white/60 backdrop-blur-sm border border-pink-100 rounded-2xl px-6 py-4 shadow-sm">
+                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Valorada en</p>
+                <p class="text-3xl font-bold text-pink-500 my-1">$15,000</p>
+                <p class="text-xs text-gray-400 uppercase tracking-widest">Pesos Aprox.</p>
+            </div>
+            
+            <p class="mt-6 text-sm font-medium tracking-widest text-gray-500 flex items-center justify-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-pink-400"></i>
+                ¡MAGIA QUE TE ACOMPAÑA SIEMPRE!
+                <i data-lucide="sparkles" class="w-4 h-4 text-pink-400"></i>
+            </p>
+        </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="max-w-4xl mx-auto px-4 -mt-4 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl p-4 shadow-md border border-pink-50 flex flex-col items-center text-center transform transition hover:-translate-y-1">
+                <i data-lucide="ticket" class="text-pink-400 w-8 h-8 mb-2"></i>
+                <h3 id="display-total-numbers" class="text-3xl font-bold text-gray-800">100</h3>
+                <p class="text-xs font-bold text-gray-500 tracking-wider">NÚMEROS</p>
+                <div class="w-full h-[1px] bg-gray-100 my-2"></div>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Tú eliges tu número favorito</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl p-4 shadow-md border border-pink-50 flex flex-col items-center text-center transform transition hover:-translate-y-1">
+                <i data-lucide="calendar" class="text-yellow-500 w-8 h-8 mb-2"></i>
+                <p class="text-[10px] font-bold text-gray-500 tracking-wider mb-1">SORTEO POR</p>
+                <h3 class="text-lg font-bold text-gray-800 mb-1">LOTERÍA NACIONAL</h3>
+                <span class="bg-pink-100 text-pink-700 text-[10px] px-2 py-0.5 rounded-full font-bold mb-2">LOTERÍA DE LA TARDE</span>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest">Primer domingo de Junio</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl p-4 shadow-md border border-pink-50 flex flex-col items-center text-center transform transition hover:-translate-y-1">
+                <i data-lucide="dollar-sign" class="text-green-500 w-8 h-8 mb-2"></i>
+                <p class="text-[10px] font-bold text-gray-500 tracking-wider mb-1">COSTO DE CADA BOLETO</p>
+                <h3 class="text-4xl font-bold text-pink-500 my-1">$300</h3>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Pesos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ERROR DE CONEXIÓN (Oculto por defecto) -->
+    <div id="sheet-error" class="max-w-4xl mx-auto px-4 mt-6 hidden">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-md flex items-start">
+            <i data-lucide="alert-circle" class="text-yellow-500 w-5 h-5 mr-3 mt-0.5"></i>
+            <div>
+                <p class="text-sm text-yellow-800 font-bold">Atención: No se pudo leer el Google Sheet.</p>
+                <p class="text-xs text-yellow-700 mt-1">
+                    Asegúrate de que el documento de Google Sheets sea público ("Cualquier persona con el enlace puede leer"). Se están mostrando números de demostración.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUMBERS GRID -->
+    <div class="max-w-4xl mx-auto px-4 mt-8">
+        <div class="bg-white/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl shadow-sm border border-pink-100 min-h-[300px]">
+            
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="flex flex-col items-center justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mb-4"></div>
+                <p class="text-pink-500 font-medium">Cargando números mágicos...</p>
+            </div>
+
+            <!-- Grid de Números -->
+            <div id="numbers-grid" class="grid grid-cols-5 md:grid-cols-10 gap-2 md:gap-3 hidden">
+                <!-- Los botones se generarán con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER GUARANTEES -->
+    <div class="max-w-4xl mx-auto px-4 mt-8">
+        <div class="border border-yellow-200 bg-gradient-to-r from-[#FFF9E6] to-[#FFF5F5] rounded-xl p-4 flex flex-wrap md:flex-nowrap items-center justify-between gap-4">
+            <div class="flex flex-col items-center text-center flex-1">
+                <i data-lucide="shield-check" class="text-yellow-600 w-6 h-6 mb-1"></i>
+                <span class="text-[10px] font-bold text-gray-600 tracking-widest uppercase">Compra con confianza</span>
+            </div>
+            <div class="hidden md:block w-[1px] h-10 bg-yellow-200"></div>
+            <div class="flex flex-col items-center text-center flex-1">
+                <i data-lucide="lock" class="text-pink-500 w-6 h-6 mb-1"></i>
+                <span class="text-[10px] font-bold text-gray-600 tracking-widest uppercase">Rifa Transparente</span>
+            </div>
+            <div class="hidden md:block w-[1px] h-10 bg-yellow-200"></div>
+            <div class="flex flex-col items-center text-center flex-1">
+                <i data-lucide="gift" class="text-pink-400 w-6 h-6 mb-1"></i>
+                <span class="text-[10px] font-bold text-gray-600 tracking-widest uppercase">¡Suerte para todos!</span>
+            </div>
+            <div class="hidden md:block w-[1px] h-10 bg-yellow-200"></div>
+            <div class="flex flex-col items-center text-center flex-1">
+                <i data-lucide="star" class="text-yellow-500 w-6 h-6 mb-1"></i>
+                <span class="text-[10px] font-bold text-gray-600 tracking-widest uppercase">La magia te espera</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- WARNING BANNER -->
+    <div class="max-w-4xl mx-auto px-4 mt-6 text-center">
+        <p class="text-xs font-bold text-gray-500 flex items-center justify-center gap-2">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-red-400"></i>
+            SI NO SE VENDEN MÍNIMO 70 NÚMEROS, SE LES DEVUELVE LOS 300 PESOS.
+        </p>
+    </div>
+
+    <!-- MODAL DE COMPRA (Oculto por defecto) -->
+    <div id="buy-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative fade-in">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">
+                ✕
+            </button>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="ticket" class="w-8 h-8 text-pink-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Número <span id="modal-number"></span></h3>
+                <p class="text-gray-600 mb-6">
+                    Estás a un paso de la magia. Toca el botón abajo para confirmar tu reserva vía WhatsApp.
+                </p>
+                
+                <div class="bg-gray-50 p-4 rounded-xl mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-gray-500">Costo del boleto:</span>
+                        <span class="font-bold text-gray-800">$300 DOP</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Premio:</span>
+                        <span class="font-bold text-pink-500">Colección Pandora</span>
+                    </div>
+                </div>
+
+                <button onclick="confirmReservation()" class="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-green-200">
+                    Reservar por WhatsApp
+                </button>
+                
+                <button onclick="closeModal()" class="w-full mt-3 text-gray-500 text-sm font-medium hover:text-gray-700">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+
+        // === CONFIGURACIÓN ===
+        const GOOGLE_SHEET_ID = '1Ds3Vl30375K4uUAoJNSIKggiR3mL2qTjgIb-26DDPDg';
+        // Formato internacional sin +, espacios o guiones
+        const WHATSAPP_NUMBER = '18492751701'; 
+        const REFRESH_INTERVAL = 10000; // 10 segundos
+
+        // === ESTADO ===
+        let selectedNumbers = [];
+        let totalNumbers = 100;
+        let selectedToBuy = null;
+
+        // === REFERENCIAS DOM ===
+        const gridContainer = document.getElementById('numbers-grid');
+        const spinner = document.getElementById('loading-spinner');
+        const errorBanner = document.getElementById('sheet-error');
+        const modal = document.getElementById('buy-modal');
+        const modalNumberDisplay = document.getElementById('modal-number');
+        const displayTotalNumbers = document.getElementById('display-total-numbers');
+
+        // === FUNCIONES ===
+
+        // Renderizar el grid de números
+        function renderGrid() {
+            gridContainer.innerHTML = ''; // Limpiar grid
+
+            for (let i = 1; i <= totalNumbers; i++) {
+                const btn = document.createElement('button');
+                const isSelected = selectedNumbers.includes(i);
+
+                btn.innerText = i;
+                
+                // Clases base
+                let classes = "relative aspect-square flex items-center justify-center rounded-lg text-lg md:text-xl font-medium transition-all duration-300 ";
+
+                if (isSelected) {
+                    classes += "bg-[#FFD6E8] text-gray-800 border-2 border-pink-300 shadow-inner cursor-not-allowed opacity-90 scale-95";
+                    btn.disabled = true;
+                } else {
+                    classes += "bg-white text-gray-600 border border-gray-200 hover:border-pink-300 hover:bg-pink-50 hover:shadow-md hover:-translate-y-1 cursor-pointer";
+                    btn.onclick = () => openModal(i);
+                }
+
+                btn.className = classes;
+                gridContainer.appendChild(btn);
+            }
+        }
+
+        // Obtener datos del Sheet
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(`https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/export?format=csv`);
+                
+                if (!response.ok) throw new Error('No accesible');
+                
+                const csvText = await response.text();
+                const rows = csvText.split('\n').map(row => row.split(','));
+                
+                const activeNumbers = [];
+                let maxNums = 100;
+
+                for (let i = 1; i < rows.length; i++) {
+                    // Números seleccionados (Columna A)
+                    const numStr = rows[i][0]?.replace(/["'\r]/g, '').trim();
+                    if (numStr && !isNaN(numStr)) {
+                        activeNumbers.push(parseInt(numStr, 10));
+                    }
+
+                    // Total de números (Columna B)
+                    if (i === 1) {
+                        const totalStr = rows[i][1]?.replace(/["'\r]/g, '').trim();
+                        if (totalStr && !isNaN(totalStr)) {
+                            maxNums = parseInt(totalStr, 10);
+                        }
+                    }
+                }
+
+                selectedNumbers = activeNumbers;
+                totalNumbers = maxNums;
+                displayTotalNumbers.innerText = totalNumbers;
+                errorBanner.classList.add('hidden');
+
+            } catch (error) {
+                console.error("Error leyendo Sheet:", error);
+                errorBanner.classList.remove('hidden');
+                
+                // Fallback si falla
+                if (selectedNumbers.length === 0) {
+                    selectedNumbers = [2, 4, 5, 7, 11, 23, 24, 25, 31, 32, 47, 50, 67, 74, 91, 100];
+                }
+            } finally {
+                spinner.classList.add('hidden');
+                gridContainer.classList.remove('hidden');
+                renderGrid();
+            }
+        }
+
+        // === CONTROLADORES DE EVENTOS ===
+
+        function openModal(num) {
+            selectedToBuy = num;
+            modalNumberDisplay.innerText = num;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            selectedToBuy = null;
+            modal.classList.add('hidden');
+        }
+
+        function confirmReservation() {
+            if (!selectedToBuy) return;
+            const message = `¡Hola! Me gustaría reservar el número *${selectedToBuy}* para la Rifa Pandora Edición Disney. ¿Aún está disponible?`;
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            closeModal();
+        }
+
+        // === INICIALIZACIÓN ===
+        fetchSheetData();
+        setInterval(fetchSheetData, REFRESH_INTERVAL);
+
+    </script>
+</body>
+</html>
